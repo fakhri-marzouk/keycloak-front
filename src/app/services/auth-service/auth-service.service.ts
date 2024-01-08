@@ -1,20 +1,18 @@
-import {Component, OnInit} from '@angular/core';
-import {KeycloakService} from "keycloak-angular";
+import {Injectable, OnInit} from '@angular/core';
 import {KeycloakProfile} from "keycloak-js";
+import {KeycloakService} from "keycloak-angular";
 
-@Component({
-  selector: 'app-root',
-  templateUrl: './app.component.html',
-  styleUrls: ['./app.component.css']
+@Injectable({
+  providedIn: 'root'
 })
-export class AppComponent{
-  title = 'front-keycloak';
 
 
+export class AuthServiceService implements OnInit {
   public isLoggedIn = false;
   public userProfile: KeycloakProfile | null = null;
 
-  constructor(private readonly keycloak: KeycloakService) {}
+  constructor(private readonly keycloak: KeycloakService) {
+  }
 
   public async ngOnInit() {
     this.isLoggedIn = await this.keycloak.isLoggedIn();
@@ -31,4 +29,6 @@ export class AppComponent{
   public logout() {
     this.keycloak.logout();
   }
+
+
 }
